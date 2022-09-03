@@ -34,12 +34,12 @@ const loadNewsApi = async(category_id)=>{
 
 
 const displayNewsCard = news_cards => {
-    console.log(news_cards.length)
-
+    console.log(news_cards)
+    // count the news
     const newsCounter = document.getElementById('news-counter')
     if(news_cards.length !== 0){
         newsCounter.innerHTML =`
-            <p>${news_cards.length} items found for category Entertainment </p>
+            <p class="fw-bold">${news_cards.length} Items Found </p>
              `
 
     }else{
@@ -48,7 +48,7 @@ const displayNewsCard = news_cards => {
         `
     }
 
-
+    // clear the card container after loading card again
     const cardContainer = document.getElementById('card-container')
     cardContainer.textContent = '';
 
