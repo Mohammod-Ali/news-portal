@@ -61,16 +61,21 @@ const displayNewsCard = news_cards => {
                             <img style="height: 50px; border-radius: 50%;";  class="img-fluid "  src="${news_card.author.img}" alt="">
                         </div>
                         <div class="ms-2 ">
-                            <p class="fw-bold ">${news_card.author.name}</p>
+                            <p class="fw-bold ">${news_card.author.name ? news_card.author.name : 'no data found'}</p>
                             <p> ${news_card.author.published_date}</p>
                         </div>
                     </div>
 
-                    <div class="ms-4">
-                        <p>View: ${news_card.total_view} </p>
+                    <div class="ms-4 d-flex">
+                    <p><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"  style="width: 20px;">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg></p>
+                        <p>
+                       ${news_card.total_view ? news_card.total_view : 'no data found'} </p>
                     </div>
                     <div>
-                        <button onclick="loadNewsDetails('${news_card._id}')" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">View More</button>
+                        <button onclick="loadNewsDetails('${news_card._id}')" type="button" class="btn btn-outline-primary"  data-bs-toggle="modal" data-bs-target="#newsModal">View More</button>
                         
                     </div>
                 </div>
@@ -98,10 +103,21 @@ const toggleSpinner = isLoading => {
 
 const loadNewsDetails = async news_id => {
     const url = `https://openapi.programming-hero.com/api/news/${news_id}`
+    // const url = `https://openapi.programming-hero.com/api/news/2e78e5e0310c2e9adbb6efb1a263e745`
     const res = await fetch(url)
     const data = await res.json()
-    console.log(data.data)
+    displayNewsDetails(data.data[0])
 
+}
+
+const displayNewsDetails = news_detail =>{
+    console.log(news_detail)
+    
+    const newsDetails = document.getElementById('news-details')
+    newsDetails.innerHTML = `
+        <h3>Title:${news_detail.title ? news_detail.title : 'no data found'} </h3>
+        <p>Details: ${news_detail.details ? news_detail.details : 'no data found'} </p>
+    `
 }
 
 
