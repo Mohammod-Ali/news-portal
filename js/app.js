@@ -70,7 +70,8 @@ const displayNewsCard = news_cards => {
                         <p>View: ${news_card.total_view} </p>
                     </div>
                     <div>
-                        <button type="button" class="btn btn-outline-primary">View More</button>
+                        <button onclick="loadNewsDetails('${news_card._id}')" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">View More</button>
+                        
                     </div>
                 </div>
             </div>
@@ -83,6 +84,7 @@ const displayNewsCard = news_cards => {
     toggleSpinner(false)
 }
 
+
 // spinner function
 const toggleSpinner = isLoading => {
     const loaderSection = document.getElementById('loader')
@@ -91,6 +93,15 @@ const toggleSpinner = isLoading => {
     }else{
         loaderSection.classList.add('d-none')
     }
+}
+
+
+const loadNewsDetails = async news_id => {
+    const url = `https://openapi.programming-hero.com/api/news/${news_id}`
+    const res = await fetch(url)
+    const data = await res.json()
+    console.log(data.data)
+
 }
 
 
