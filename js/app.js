@@ -34,12 +34,26 @@ const loadNewsApi = async(category_id)=>{
 
 
 const displayNewsCard = news_cards => {
-    // console.log(news_cards)
+    console.log(news_cards.length)
+
+    const newsCounter = document.getElementById('news-counter')
+    if(news_cards.length !== 0){
+        newsCounter.innerHTML =`
+            <p>${news_cards.length} items found for category Entertainment </p>
+             `
+
+    }else{
+        newsCounter.innerHTML =`
+            <p>No data found</p>
+        `
+    }
+
+
     const cardContainer = document.getElementById('card-container')
     cardContainer.textContent = '';
 
     news_cards.forEach(news_card =>{
-        console.log(news_card)
+        // console.log(news_card)
 
         const cardDiv = document.createElement('div')
         cardDiv.classList.add('mt-4')
@@ -115,7 +129,8 @@ const displayNewsDetails = news_detail =>{
     
     const newsDetails = document.getElementById('news-details')
     newsDetails.innerHTML = `
-        <h3>Title:${news_detail.title ? news_detail.title : 'no data found'} </h3>
+        <h3>Title: ${news_detail.title ? news_detail.title : 'no data found'} </h3>
+        <p>Author: <small>${news_detail.author.name ? news_detail.author.name : 'no data found'}</small></p>
         <p>Details: ${news_detail.details ? news_detail.details : 'no data found'} </p>
     `
 }
