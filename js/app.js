@@ -31,10 +31,21 @@ const loadNewsApi = async(category_id)=>{
     const data = await res.json();
     displayNewsCard(data.data)
 }
+const sortedArray = (a , b )=>{
+    if ( a.total_view < b.total_view ){
+        return 1;
+      }
+      if ( a.total_view > b.total_view ){
+        return -1;
+      }
+      return 0;
+}
 
 
 const displayNewsCard = news_cards => {
     console.log(news_cards)
+    const sortedCard = news_cards.sort( sortedArray );
+
     // count the news
     const newsCounter = document.getElementById('news-counter')
     if(news_cards.length !== 0){
@@ -52,8 +63,7 @@ const displayNewsCard = news_cards => {
     const cardContainer = document.getElementById('card-container')
     cardContainer.textContent = '';
 
-    news_cards.forEach(news_card =>{
-        // console.log(news_card)
+    sortedCard.forEach(news_card =>{
 
         const cardDiv = document.createElement('div')
         cardDiv.classList.add('mt-4')
@@ -81,11 +91,11 @@ const displayNewsCard = news_cards => {
                     </div>
 
                     <div class="ms-4 d-flex">
-                    <p><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"  style="width: 20px;">
+                    <p><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"  style="width: 25px;">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg></p>
-                        <p>
+                        <p class="ms-1">
                        ${news_card.total_view ? news_card.total_view : 'no data found'} </p>
                     </div>
                     <div>
@@ -117,7 +127,6 @@ const toggleSpinner = isLoading => {
 
 const loadNewsDetails = async news_id => {
     const url = `https://openapi.programming-hero.com/api/news/${news_id}`
-    // const url = `https://openapi.programming-hero.com/api/news/2e78e5e0310c2e9adbb6efb1a263e745`
     const res = await fetch(url)
     const data = await res.json()
     displayNewsDetails(data.data[0])
@@ -125,8 +134,6 @@ const loadNewsDetails = async news_id => {
 }
 
 const displayNewsDetails = news_detail =>{
-    console.log(news_detail)
-    
     const newsDetails = document.getElementById('news-details')
     newsDetails.innerHTML = `
         <h3>Title: ${news_detail.title ? news_detail.title : 'no data found'} </h3>
@@ -136,4 +143,4 @@ const displayNewsDetails = news_detail =>{
 }
 
 
-loadNewsCategory()
+loadNewsCategory('')
