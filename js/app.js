@@ -30,51 +30,52 @@ const loadNewsApi = async(category_id)=>{
 }
 
 const displayNewsCard = news_cards => {
-    console.log(news_cards)
+    // console.log(news_cards)
     const cardContainer = document.getElementById('card-container')
+    cardContainer.textContent = '';
 
     news_cards.forEach(news_card =>{
+        console.log(news_card)
+
         const cardDiv = document.createElement('div')
-        cardDiv.classList.add('col')
+        cardDiv.classList.add('mt-4')
         cardDiv.innerHTML = `
-        <div class="card">
-            <img src="..." class="card-img-top" alt="...">
+        <div class="row p-3 border mx-3 shadow rounded"> 
+        <div class="col-md-4">
+            <img src="${news_card.thumbnail_url}" class="img-fluid rounded-start" alt="...">
+        </div>
+        <div class="col-md-8">
             <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <h5 class="card-title">${news_card.title}</h5>
+                <p class="card-text pt-4">${news_card.details.slice(0, 200)+ "..."}</p>
+
+                <div class="d-flex align-items-center mt-5 justify-content-between flex-wrap">
+
+                    <div class="d-flex align-items-center ">
+
+                        <div class="rounded-circle">
+                            <img style="height: 50px; border-radius: 50%;";  class="img-fluid "  src="${news_card.author.img}" alt="">
+                        </div>
+                        <div class="ms-2 ">
+                            <p class="fw-bold ">${news_card.author.name}</p>
+                            <p> ${news_card.author.published_date}</p>
+                        </div>
+                    </div>
+
+                    <div class="ms-4">
+                        <p>View: ${news_card.total_view} </p>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-outline-primary">View More</button>
+                    </div>
+                </div>
             </div>
+        </div>
         </div>
         `
         cardContainer.appendChild(cardDiv)
     })
 
 }
-
-// const displayNews = newsCards => {
-
-//     const newsSection = document.getElementById('news-section')
-    
-//     newsCards.forEach(newsCard => {
-//         console.log(newsCard)
-//     const cardDiv = document.createElement('div')
-//     cardDiv.classList.add('row g-0')
-
-//     cardDiv.innerHTML = `
-//     <div class="col-md-4">
-//         <img src="..." class="img-fluid rounded-start" alt="...">
-//     </div>
-//     <div class="col-md-8">
-//         <div class="card-body">
-//             <h5 class="card-title">Card title</h5>
-//             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-//             <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-//         </div>
-//     </div>
-//     `;
-//     })
-    
-//     newsSection.appendChild(cardDiv)
-// }
-
 
 loadNewsCategory()
